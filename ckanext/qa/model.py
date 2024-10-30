@@ -44,6 +44,7 @@ class QA(Base):
     created = Column(types.DateTime, default=datetime.datetime.now)
     updated = Column(types.DateTime, default=datetime.datetime.now)
 
+
     def __repr__(self):
         summary = 'score=%s format=%s' % (self.openness_score, self.format)
         details = six.text_type(self.openness_score_reason).encode('unicode_escape')
@@ -52,16 +53,19 @@ class QA(Base):
         return '<QA %s /dataset/%s/resource/%s %s>' % \
             (summary, package_name, self.resource_id, details)
 
+
     def as_dict(self):
         context = {'model': model}
         qa_dict = dictization.table_dictize(self, context)
         return qa_dict
+
 
     @classmethod
     def get_for_resource(cls, resource_id):
         return model.Session.query(cls) \
                     .filter(cls.resource_id == resource_id) \
                     .first()
+
 
     @classmethod
     def get_for_package(cls, package_id):
@@ -73,6 +77,7 @@ class QA(Base):
             .join(model.Resource, cls.resource_id == model.Resource.id) \
             .filter(model.Resource.state == 'active') \
             .all()
+
 
     @classmethod
     def create(cls, resource_id):
