@@ -58,6 +58,8 @@ def update_package(package_id):
     """
 
     try:
+        log.debug('QA 5')
+
         update_package_(package_id)
     except Exception as e:
         log.error('Exception occurred during QA update_package: %s: %s',
@@ -66,6 +68,7 @@ def update_package(package_id):
 
 
 def update_package_(package_id):
+    log.debug('QA 6')
     from ckan import model
     package = model.Package.get(package_id)
     if not package:
@@ -83,7 +86,7 @@ def update_package_(package_id):
 
     # Refresh the index for this dataset, so that it contains the latest
     # qa info
-    _update_search_index(package.id)
+    # _update_search_index(package.id)
 
 
 def update(resource_id):
@@ -118,12 +121,12 @@ def update_resource_(resource_id):
         package = resource.resource_group.package
     else:
         package = resource.package
-    if package:
-        # Refresh the index for this dataset, so that it contains the latest
-        # qa info
-        _update_search_index(package.id)
-    else:
-        log.warning('Resource not connected to a package. Res: %r', resource)
+    # if package:
+    #     # Refresh the index for this dataset, so that it contains the latest
+    #     # qa info
+    #     _update_search_index(package.id)
+    # else:
+    #     log.warning('Resource not connected to a package. Res: %r', resource)
     return json.dumps(qa_result)
 
 

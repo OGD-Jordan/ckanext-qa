@@ -9,10 +9,12 @@ class MixinPlugin(p.SingletonPlugin):
     p.implements(p.IBlueprint)
     p.implements(p.IClick)
 
+
     # IBlueprint
 
     def get_blueprint(self):
         return views.get_blueprints()
+
 
     # IClick
 

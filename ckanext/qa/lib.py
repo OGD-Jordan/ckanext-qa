@@ -19,8 +19,9 @@ def compat_enqueue(name, fn, queue, args=None):
     '''
     try:
         # Try to use RQ
+        print('QA6')
         from ckan.plugins.toolkit import enqueue_job
-        enqueue_job(fn, args=args, queue=queue)
+        enqueue_job(fn, args=args, queue=queue, title="QA")
     except ImportError:
         # Fallback to Celery
         import uuid
@@ -85,6 +86,7 @@ def munge_format_to_be_canonical(format_name):
 
 
 def create_qa_update_package_task(package, queue):
+    print('QA4')
 
     compat_enqueue('qa.update_package', update_package, queue,  args=[package.id])
     log.debug('QA of package put into celery queue %s: %s',
