@@ -122,11 +122,11 @@ class QAPlugin(MixinPlugin, p.SingletonPlugin):
         self._add_to_pkg_dict(pkg_dict)
 
 
-    def after_dataset_search(self, search_results, search_params):
-        for dataset in search_results.get('results', []):
-            self._add_to_pkg_dict(dataset)
+    # def after_dataset_search(self, search_results, search_params):
+    #     for dataset in search_results.get('results', []):
+    #         self._add_to_pkg_dict(dataset)
 
-        return search_results
+    #     return search_results
 
 
     def before_dataset_index(self, pkg_dict):
