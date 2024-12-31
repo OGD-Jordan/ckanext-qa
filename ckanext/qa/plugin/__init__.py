@@ -106,9 +106,9 @@ class QAPlugin(MixinPlugin, p.SingletonPlugin):
                 res['qa'] = qa_dict
 
     
-    def before_dataset_view(self, pkg_dict):
-        self._add_to_pkg_dict(pkg_dict)
-        return pkg_dict
+    # def before_dataset_view(self, pkg_dict):
+    #     self._add_to_pkg_dict(pkg_dict)
+    #     return pkg_dict
     
 
     def after_dataset_show(self, context, pkg_dict):
@@ -120,6 +120,26 @@ class QAPlugin(MixinPlugin, p.SingletonPlugin):
         # overwritten here when output again.
 
         self._add_to_pkg_dict(pkg_dict)
+
+        if pkg_dict and pkg_dict['type'] == 'dataset' and pkg_dict.get('id'):
+            extras = pkg_dict.get('extras',[])
+            if 'qa' in pkg_dict:
+                extras.append({
+                    'id': 'qa-openness_score',
+                    'package_id': pkg_dict['id'],
+                    'key': 'openness_score',
+                    'value': pkg_dict['qa']['openness_score'],
+                    'state': 'active',
+                })
+                extras.append({
+                    'id': 'qa-openness_score_reason',
+                    'package_id': pkg_dict['id'],
+                    'key': 'openness_score_reason',
+                    'value': pkg_dict['qa']['openness_score_reason'],
+                    'state': 'active',
+                })
+                
+            pkg_dict['extras'] = extras
 
 
     # def after_dataset_search(self, search_results, search_params):
