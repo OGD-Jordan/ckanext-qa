@@ -142,13 +142,6 @@ class QAPlugin(MixinPlugin, p.SingletonPlugin):
             pkg_dict['extras'] = extras
 
 
-    # def after_dataset_search(self, search_results, search_params):
-    #     for dataset in search_results.get('results', []):
-    #         self._add_to_pkg_dict(dataset)
-
-    #     return search_results
-
-
     def before_dataset_index(self, pkg_dict):
         qa_objs = QA.get_for_package(pkg_dict['id'])
         if not qa_objs: return pkg_dict
