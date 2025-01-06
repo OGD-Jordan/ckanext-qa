@@ -121,7 +121,7 @@ class QAPlugin(MixinPlugin, p.SingletonPlugin):
 
         self._add_to_pkg_dict(pkg_dict)
 
-        if pkg_dict and pkg_dict['type'] == 'dataset' and pkg_dict.get('id'):
+        if pkg_dict and pkg_dict['type'] == 'dataset' and pkg_dict.get('id') and context.get('use_cache', True)== False and context.get('ignore_auth', False) and context.get('validate', True) == False:
             extras = pkg_dict.get('extras',[])
             if 'qa' in pkg_dict:
                 extras.append({
