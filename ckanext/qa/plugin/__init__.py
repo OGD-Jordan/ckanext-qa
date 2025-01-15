@@ -124,20 +124,23 @@ class QAPlugin(MixinPlugin, p.SingletonPlugin):
         if pkg_dict and pkg_dict['type'] == 'dataset' and pkg_dict.get('id') and context.get('use_cache', True)== False and context.get('ignore_auth', False) and context.get('validate', True) == False:
             extras = pkg_dict.get('extras',[])
             if 'qa' in pkg_dict:
-                extras.append({
-                    'id': 'qa-openness_score',
-                    'package_id': pkg_dict['id'],
-                    'key': 'openness_score',
-                    'value': pkg_dict['qa']['openness_score'],
-                    'state': 'active',
-                })
-                extras.append({
-                    'id': 'qa-openness_score_reason',
-                    'package_id': pkg_dict['id'],
-                    'key': 'openness_score_reason',
-                    'value': pkg_dict['qa']['openness_score_reason'],
-                    'state': 'active',
-                })
+                extra_keys = [extra.get('key') for extra in extras]
+                if 'openness_score' not in extra_keys:
+                    extras.append({
+                        'id': 'qa-openness_score',
+                        'package_id': pkg_dict['id'],
+                        'key': 'openness_score',
+                        'value': pkg_dict['qa']['openness_score'],
+                        'state': 'active',
+                    })
+                if 'openness_score_reason' not in extra_keys:
+                    extras.append({
+                        'id': 'qa-openness_score_reason',
+                        'package_id': pkg_dict['id'],
+                        'key': 'openness_score_reason',
+                        'value': pkg_dict['qa']['openness_score_reason'],
+                        'state': 'active',
+                    })
                 
             pkg_dict['extras'] = extras
 
