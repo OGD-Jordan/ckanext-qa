@@ -1,17 +1,19 @@
-# Translations template for ckanext-qa.
+# Arabic translations for ckanext-qa.
 # Copyright (C) 2025 ORGANIZATION
 # This file is distributed under the same license as the ckanext-qa project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-qa 2.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-03-02 15:49+0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-03-02 15:49+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ar\n"
+"Language-Team: ar <LL@li.org>\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : "
+"n%100>=3 && n%100<=10 ? 3 : n%100>=0 && n%100<=2 ? 4 : 5);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -81,8 +83,8 @@ msgstr ""
 #: ckanext/qa/tasks.py:311
 #, python-format
 msgid ""
-"Content of file appeared to be format \"%s\" which receives openness score: "
-"%s."
+"Content of file appeared to be format \"%s\" which receives openness "
+"score: %s."
 msgstr ""
 
 #: ckanext/qa/tasks.py:315
@@ -113,8 +115,8 @@ msgstr ""
 #: ckanext/qa/tasks.py:361
 #, python-format
 msgid ""
-"URL extension \"%s\" relates to format \"%s\" but a score for that format is "
-"not configured, so giving it default score %s."
+"URL extension \"%s\" relates to format \"%s\" but a score for that format"
+" is not configured, so giving it default score %s."
 msgstr ""
 
 #: ckanext/qa/tasks.py:365
