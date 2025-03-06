@@ -21,205 +21,205 @@ msgstr ""
 
 #: ckanext/qa/tasks.py:193
 msgid "Could not understand the file format, therefore score is 1."
-msgstr ""
+msgstr "لم أتمكن من فهم تنسيق الملف، لذلك النتيجة هي 1"
 
 #: ckanext/qa/tasks.py:203
 #, python-format
 msgid "Unknown error: %s"
-msgstr ""
+msgstr " %s:خطأ غير معروف"
 
 #: ckanext/qa/tasks.py:217
 msgid "License not open"
-msgstr ""
+msgstr "الترخيص غير مفتوح"
 
 #: ckanext/qa/tasks.py:244
 msgid "File could not be downloaded."
-msgstr ""
+msgstr ".لم يتم تحميل الملف"
 
 #: ckanext/qa/tasks.py:245 ckanext/qa/tasks.py:321 ckanext/qa/tasks.py:327
 #: ckanext/qa/templates/qa/openness_stars.html:24
 #: ckanext/qa/templates/qa/openness_stars_brief.html:23
 #: ckanext/qa/templates/report/openness.html:88
 msgid "Reason"
-msgstr ""
+msgstr "سبب"
 
 #: ckanext/qa/tasks.py:246
 #, python-format
 msgid "Error details: %s."
-msgstr ""
+msgstr "%s: تفاصيل الخطأ"
 
 #: ckanext/qa/tasks.py:247
 #, python-format
 msgid "Attempted on %s."
-msgstr ""
+msgstr "%s: تمت المحاولة"
 
 #: ckanext/qa/tasks.py:251 ckanext/qa/tasks.py:259
 #, python-format
 msgid "This URL last worked on: %s."
-msgstr ""
+msgstr "%s: آخر مرة عمل فيها هذا الرابط"
 
 #: ckanext/qa/tasks.py:253
 msgid "This was the first attempt."
-msgstr ""
+msgstr "كانت هذه المحاولة الأولى"
 
 #: ckanext/qa/tasks.py:255
 #, python-format
 msgid "Tried %s times since %s."
-msgstr ""
+msgstr "%s مرات منذ ذلك الحين %s حاول "
 
 #: ckanext/qa/tasks.py:261
 msgid "This URL has not worked in the history of this tool."
-msgstr ""
+msgstr "لم يعمل هذا الرابط في تاريخ هذه الأداة"
 
 #: ckanext/qa/tasks.py:298 ckanext/qa/tasks.py:331
 msgid "This file had not been downloaded at the time of scoring it."
-msgstr ""
+msgstr "لم يتم تنزيل هذا الملف في وقت تسجيله"
 
 #: ckanext/qa/tasks.py:303
 #, python-format
 msgid "Cache filepath does not exist: \"%s\"."
-msgstr ""
+msgstr ": "/%s"/ مسار ملف ذاكرة التخزين المؤقت غير موجود"
 
 #: ckanext/qa/tasks.py:311
 #, python-format
 msgid ""
 "Content of file appeared to be format \"%s\" which receives openness "
 "score: %s."
-msgstr ""
+msgstr " \"%s\يبدو أن محتوى الملف بتنسيق الذي يتلقى درجة الانفتاح : %sالنتيجة"
 
 #: ckanext/qa/tasks.py:315
 msgid "The format of the file was not recognized from its contents."
-msgstr ""
+msgstr "لم يتم التعرف على تنسيق الملف من محتوياته."
 
 #: ckanext/qa/tasks.py:320
 msgid "File was not downloaded deliberately"
-msgstr ""
+msgstr "لم يتم تنزيل الملف عن قصد"
 
 #: ckanext/qa/tasks.py:321 ckanext/qa/tasks.py:327
 msgid "Using other methods to determine file openness."
-msgstr ""
+msgstr "استخدام طرق أخرى لتحديد فتح الملف."
 
 #: ckanext/qa/tasks.py:326
 msgid "A system error occurred during downloading this file"
-msgstr ""
+msgstr "حدث خطأ في النظام أثناء تنزيل هذا الملف"
 
 #: ckanext/qa/tasks.py:349
 msgid "Could not determine a file extension in the URL."
-msgstr ""
+msgstr "لم يتم تحديد امتداد الملف في عنوان URL."
 
 #: ckanext/qa/tasks.py:357
 #, python-format
 msgid "URL extension \"%s\" relates to format \"%s\" and receives score: %s."
-msgstr ""
+msgstr "يرتبط امتداد عنوان URL \"%s\" بالتنسيق \"%s\" ويتلقى النتيجة: %s."
 
 #: ckanext/qa/tasks.py:361
 #, python-format
 msgid ""
 "URL extension \"%s\" relates to format \"%s\" but a score for that format"
 " is not configured, so giving it default score %s."
-msgstr ""
+msgstr "" ولكن لم يتم تكوين درجة لذلك التنسيق،/"%s/"لذا يتم منحه الدرجة الافتراضية /%s"/URLامتداد   يتعلق بالتنسيق %s."
 
 #: ckanext/qa/tasks.py:365
 #, python-format
 msgid "URL extension \"%s\" is an unknown format."
-msgstr ""
+msgstr " هو تنسيق غير معروف\"%s\"URLامتداد  "
 
 #: ckanext/qa/tasks.py:403
 msgid "Format field is blank."
-msgstr ""
+msgstr "حقل التنسيق فارغ"
 
 #: ckanext/qa/tasks.py:408
 #, python-format
 msgid "Format field \"%s\" does not correspond to a known format."
-msgstr ""
+msgstr " لا يتوافق مع تنسيق معروف /"%s/" حقل التنسيق"
 
 #: ckanext/qa/tasks.py:411
 #, python-format
 msgid "Format field \"%s\" receives score: %s."
-msgstr ""
+msgstr ": %sيحصل على التقييم"/%s"/حقل التنسيق "
 
 #: ckanext/qa/templates/qa/openness_stars.html:23
 #: ckanext/qa/templates/snippets/organization.html:9
 msgid "Openness"
-msgstr ""
+msgstr "الانفتاح"
 
 #: ckanext/qa/templates/qa/openness_stars.html:25
 #: ckanext/qa/templates/qa/openness_stars_brief.html:23
 msgid "Checked"
-msgstr ""
+msgstr "تم التحقق"
 
 #: ckanext/qa/templates/qa/openness_stars.html:27
 #: ckanext/qa/templates/qa/openness_stars_brief.html:26
 msgid "No openness information yet."
-msgstr ""
+msgstr "لا توجد معلومات عن الانفتاح حتى الآن"
 
 #: ckanext/qa/templates/qa/stars.html:24
 msgid "{0} out of {1}"
-msgstr ""
+msgstr "  "
 
 #: ckanext/qa/templates/qa/stars_explained.html:7
 msgid "Linked data - data URIs and linked to other data (e.g. RDF)"
-msgstr ""
+msgstr "(RDF:مثال)URIsالبيانات المرتبطة - بيانات  مرتبطة ببيانات أخرى"
 
 #: ckanext/qa/templates/qa/stars_explained.html:9
 msgid "Linkable data - served at URIs (e.g. RDF)"
-msgstr ""
+msgstr "(RDF:مثال)URIs بيانات قابلة للربط - تقدم عبر "
 
 #: ckanext/qa/templates/qa/stars_explained.html:11
 msgid "Structured data in open format (e.g. CSV)"
-msgstr ""
+msgstr "(CSV:مثال)البيانات المنظمة بتنسيق مفتوح"
 
 #: ckanext/qa/templates/qa/stars_explained.html:13
 msgid "Structured data but proprietry format (e.g. Excel)"
-msgstr ""
+msgstr "(Excel:مثال)بيانات منظمة ولكن بتنسيق خاص"
 
 #: ckanext/qa/templates/qa/stars_explained.html:15
 msgid "Unstructured data (e.g. PDF)"
-msgstr ""
+msgstr "(PDF:مثال)البيانات غير المنظمة "
 
 #: ckanext/qa/templates/report/openness.html:3
 #: ckanext/qa/templates/report/openness.html:57
 msgid "Datasets given a score"
-msgstr ""
+msgstr "مجموعة البيانات التي تم منحها درجة"
 
 #: ckanext/qa/templates/report/openness.html:4
 #: ckanext/qa/templates/report/openness.html:58
 msgid "Score frequencies"
-msgstr ""
+msgstr "تكرار الدرجات"
 
 #: ckanext/qa/templates/report/openness.html:8
 #: ckanext/qa/templates/report/openness.html:29
 #: ckanext/qa/templates/report/openness.html:62
 msgid "Score TBC"
-msgstr ""
+msgstr "الدرجة سيتم تحديدها لاحقًا"
 
 #: ckanext/qa/templates/report/openness.html:10
 #: ckanext/qa/templates/report/openness.html:31
 #: ckanext/qa/templates/report/openness.html:64
 #: ckanext/qa/templates/report/openness.html:87
 msgid "Score"
-msgstr ""
+msgstr "نتيجة"
 
 #: ckanext/qa/templates/report/openness.html:28
 #: ckanext/qa/templates/report/openness.html:85
 msgid "Organization"
-msgstr ""
+msgstr "جهة  حكومية"
 
 #: ckanext/qa/templates/report/openness.html:33
 #: ckanext/qa/templates/report/openness.html:56
 msgid "Total stars"
-msgstr ""
+msgstr "مجموع النجوم"
 
 #: ckanext/qa/templates/report/openness.html:34
 #: ckanext/qa/templates/report/openness.html:55
 msgid "Average score"
-msgstr ""
+msgstr "متوسط النتيجة"
 
 #: ckanext/qa/templates/report/openness.html:82
 msgid "Dataset"
-msgstr ""
+msgstr "مجموعة البيانات"
 
 #: ckanext/qa/templates/report/openness.html:83
 msgid "Notes"
-msgstr ""
+msgstr "ملاحظات"
 
