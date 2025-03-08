@@ -16,15 +16,24 @@ log = logging.getLogger(__name__)
 
 
 from ckanext.qa.plugin.flask_plugin import MixinPlugin
+from ckan.lib.plugins import DefaultTranslation
 
 
-class QAPlugin(MixinPlugin, p.SingletonPlugin):
+class QAPlugin(MixinPlugin, p.SingletonPlugin, DefaultTranslation):
+    p.implements(p.ITranslation, inherit=True)
     p.implements(p.IConfigurer, inherit=True)
     p.implements(IPipe, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IAuthFunctions)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IPackageController, inherit=True)
+
+    
+    # ITranslation
+
+    def i18n_directory(self):
+        return '../'
+    
 
 
     # IConfigurer
