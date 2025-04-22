@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-qa 2.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-02 15:49+0500\n"
+"POT-Creation-Date: 2025-04-17 18:02+0500\n"
 "PO-Revision-Date: 2025-03-02 15:49+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -78,14 +78,14 @@ msgstr "لم يتم تنزيل هذا الملف في وقت تسجيله"
 #: ckanext/qa/tasks.py:303
 #, python-format
 msgid "Cache filepath does not exist: \"%s\"."
-msgstr ": "/%s"/ مسار ملف ذاكرة التخزين المؤقت غير موجود"
+msgstr ": \"/%s\"/ مسار ملف ذاكرة التخزين المؤقت غير موجود"
 
 #: ckanext/qa/tasks.py:311
 #, python-format
 msgid ""
 "Content of file appeared to be format \"%s\" which receives openness "
 "score: %s."
-msgstr " \"%s\يبدو أن محتوى الملف بتنسيق الذي يتلقى درجة الانفتاح : %sالنتيجة"
+msgstr " \"%s\\يبدو أن محتوى الملف بتنسيق الذي يتلقى درجة الانفتاح : %sالنتيجة"
 
 #: ckanext/qa/tasks.py:315
 msgid "The format of the file was not recognized from its contents."
@@ -117,7 +117,9 @@ msgstr "يرتبط امتداد عنوان URL \"%s\" بالتنسيق \"%s\" و
 msgid ""
 "URL extension \"%s\" relates to format \"%s\" but a score for that format"
 " is not configured, so giving it default score %s."
-msgstr "" ولكن لم يتم تكوين درجة لذلك التنسيق،/"%s/"لذا يتم منحه الدرجة الافتراضية /%s"/URLامتداد   يتعلق بالتنسيق %s."
+msgstr ""
+"\" ولكن لم يتم تكوين درجة لذلك التنسيق،/\"%s/\"لذا يتم منحه الدرجة "
+"الافتراضية /%s\"/URLامتداد   يتعلق بالتنسيق %s."
 
 #: ckanext/qa/tasks.py:365
 #, python-format
@@ -131,12 +133,12 @@ msgstr "حقل التنسيق فارغ"
 #: ckanext/qa/tasks.py:408
 #, python-format
 msgid "Format field \"%s\" does not correspond to a known format."
-msgstr " لا يتوافق مع تنسيق معروف /"%s/" حقل التنسيق"
+msgstr " لا يتوافق مع تنسيق معروف /\"%s/\" حقل التنسيق"
 
 #: ckanext/qa/tasks.py:411
 #, python-format
 msgid "Format field \"%s\" receives score: %s."
-msgstr ": %sيحصل على التقييم"/%s"/حقل التنسيق "
+msgstr ": %sيحصل على التقييم\"/%s\"/حقل التنسيق "
 
 #: ckanext/qa/templates/qa/openness_stars.html:23
 #: ckanext/qa/templates/snippets/organization.html:9
