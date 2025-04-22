@@ -10,16 +10,15 @@ from ckanext.qa.logic import action, auth
 from ckanext.qa.model import QA, aggregate_qa_for_a_dataset
 from ckanext.qa.helpers import qa_openness_stars_resource_html, qa_openness_stars_dataset_html
 from ckanext.qa.lib import create_qa_update_package_task
+import ckanext.qa.views as views
+import ckanext.qa.cli as cli
+from ckan.lib.plugins import DefaultTranslation
 
 
 log = logging.getLogger(__name__)
 
 
-from ckanext.qa.plugin.flask_plugin import MixinPlugin
-from ckan.lib.plugins import DefaultTranslation
-
-
-class QAPlugin(MixinPlugin, p.SingletonPlugin, DefaultTranslation):
+class QAPlugin(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IConfigurer, inherit=True)
     p.implements(IPipe, inherit=True)
@@ -27,19 +26,26 @@ class QAPlugin(MixinPlugin, p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IAuthFunctions)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IPackageController, inherit=True)
+    p.implements(p.IBlueprint)
+    p.implements(p.IClick)
 
-    
-    # ITranslation
 
-    def i18n_directory(self):
-        return '../'
-    
+    # IBlueprint
+
+    def get_blueprint(self):
+        return views.get_blueprints()
+
+
+    # IClick
+
+    def get_commands(self):
+        return cli.get_commands()
 
 
     # IConfigurer
 
     def update_config(self, config):
-        tk.add_template_directory(config, '../templates')
+        tk.add_template_directory(config, 'templates')
 
 
     # IPipe
