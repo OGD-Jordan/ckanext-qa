@@ -172,30 +172,32 @@ def resource_score(resource):
 
     try:
         score_reasons = []  # a list of strings detailing how we scored it
+        score_reasons_translated = []  # a list of strings in Arabic
         archival = Archival.get_for_resource(resource_id=resource.id)
         if not resource:
             raise QAError('Could not find resource "%s"' % resource.id)
 
-        score, format_ = score_if_link_broken(archival, resource, score_reasons)
+        score, format_ = score_if_link_broken(archival, resource, score_reasons, score_reasons_translated)
         if score is None:
             # we don't want to take the publisher's word for it, in case the link
             # is only to a landing page, so highest priority is the sniffed type
             score, format_ = score_by_sniffing_data(archival, resource,
-                                                    score_reasons)
+                                                    score_reasons, score_reasons_translated)
             if score is None:
                 # Fall-backs are user-given data
-                score, format_ = score_by_url_extension(resource, score_reasons)
+                score, format_ = score_by_url_extension(resource, score_reasons, score_reasons_translated)
                 if score is None:
-                    score, format_ = score_by_format_field(resource, score_reasons)
+                    score, format_ = score_by_format_field(resource, score_reasons, score_reasons_translated)
                     if score is None:
                         log.warning('Could not score resource: "%s" with url: "%s"',
                                     resource.id, resource.url)
                         score_reasons.append(_('Could not understand the file format, therefore score is 1.'))
+                        score_reasons_translated.append('لا يمكن فهم تنسيق الملف، وبالتالي فإن النتيجة هي 1.')
                         score = 1
                         if format_ is None:
                             # use any previously stored format value for this resource
                             format_ = get_qa_format(resource.id)
-        score_reason = ' '.join(score_reasons)
+        score_reason = '  '.join(score_reasons)
         format_ = format_ or None
     except Exception as e:
         log.error('Unexpected error while calculating openness score %s: %s\nException: %s',
@@ -215,6 +217,8 @@ def resource_score(resource):
         package = resource.package
     if score > 0 and not package.isopen():
         score_reason = _('License not open')
+        # In arabic, the reason is translated to Arabic
+        score_reasons_translated = 'رخصة غير مفتوحة'
         score = 0
 
     log.info('Score: %s Reason: %s', score, score_reason)
@@ -224,11 +228,13 @@ def resource_score(resource):
     result = {
         'openness_score': score,
         'openness_score_reason': score_reason,
+        'score_reasons_translated': score_reasons_translated,
         'format': format_,
         'archival_timestamp': archival_updated
     }
 
     return result
+
 
 
 def broken_link_error_message(archival):
@@ -245,24 +251,35 @@ def broken_link_error_message(archival):
                 _('Reason') + ':', unicode(archival.status) + '.',
                 _('Error details: %s.') % archival.reason,
                 _('Attempted on %s.') % format_date(archival.updated)]
+    messages_translated = [_('تعذر تنزيل الملف.'),
+                           _('السبب') + ':', unicode(archival.status) + '.',
+                           _('تفاصيل الخطأ: %s.') % archival.reason,
+                           _('تم المحاولة في %s.') % format_date(archival.updated)]
     last_success = format_date(archival.last_success)
     if archival.failure_count == 1:
         if last_success:
             messages.append(_('This URL last worked on: %s.') % last_success)
+            messages_translated.append(_('عمل هذا الرابط آخر مرة في: %s.') % last_success)
         else:
             messages.append(_('This was the first attempt.'))
+            messages_translated.append(_('هذه هي المحاولة الأولى.'))
     else:
         messages.append(_('Tried %s times since %s.') %
                         (archival.failure_count,
                          format_date(archival.first_failure)))
+        messages_translated.append(_('تمت المحاولة %s مرات منذ %s.') %
+                                   (archival.failure_count,
+                                    format_date(archival.first_failure)))
         if last_success:
             messages.append(_('This URL last worked on: %s.') % last_success)
+            messages_translated.append(_('عمل هذا الرابط آخر مرة في: %s.') % last_success)
         else:
             messages.append(_('This URL has not worked in the history of this tool.'))
-    return ' '.join(messages)
+            messages_translated.append(_('لم يعمل هذا الرابط في تاريخ هذه الأداة.'))
+    return ' '.join(messages), ' '.join(messages_translated)
 
 
-def score_if_link_broken(archival, resource, score_reasons):
+def score_if_link_broken(archival, resource, score_reasons, score_reasons_translated):
     '''
     Looks to see if the archiver said it was broken, and if so, writes to
     the score_reasons and returns a score.
@@ -275,14 +292,16 @@ def score_if_link_broken(archival, resource, score_reasons):
     '''
     if archival and archival.is_broken:
         # Score 0 since we are sure the link is currently broken
-        score_reasons.append(broken_link_error_message(archival))
+        messages = broken_link_error_message(archival)
+        score_reasons.append(messages[0])
+        score_reasons_translated.append(messages[1])
         format_ = get_qa_format(resource.id)
         log.info('Archiver says link is broken. Previous format: %r' % format_)
         return (0, format_)
     return (None, None)
 
 
-def score_by_sniffing_data(archival, resource, score_reasons):
+def score_by_sniffing_data(archival, resource, score_reasons, score_reasons_translated):
     '''
     Looks inside a data file\'s contents to determine its format and score.
 
@@ -296,11 +315,13 @@ def score_by_sniffing_data(archival, resource, score_reasons):
     from ckanext.qa.lib import resource_format_scores
     if not archival or not archival.cache_filepath:
         score_reasons.append(_('This file had not been downloaded at the time of scoring it.'))
+        score_reasons_translated.append('لم يتم تنزيل هذا الملف في وقت تقييمه.')
         return (None, None)
     # Analyse the cached file
     filepath = archival.cache_filepath
     if not os.path.exists(filepath):
         score_reasons.append(_('Cache filepath does not exist: "%s".') % filepath)
+        score_reasons_translated.append('مسار التخزين المؤقت "%s" غير موجود.' % filepath)
         return (None, None)
     else:
         if filepath:
@@ -310,9 +331,12 @@ def score_by_sniffing_data(archival, resource, score_reasons):
             if sniffed_format:
                 score_reasons.append(_('Content of file appeared to be format "%s" which receives openness score: %s.')
                                      % (sniffed_format['format'], score))
+                score_reasons_translated.append('يبدو أن محتوى الملف بتنسيق "%s" والذي يحصل على درجة انفتاح: %s.'
+                                            % (sniffed_format['format'], score))
                 return score, sniffed_format['format']
             else:
                 score_reasons.append(_('The format of the file was not recognized from its contents.'))
+                score_reasons_translated.append('لم يتم التعرف على تنسيق الملف من محتوياته.')
                 return (None, None)
         else:
             # No cache_url
@@ -320,19 +344,26 @@ def score_by_sniffing_data(archival, resource, score_reasons):
                 score_reasons.append(_('File was not downloaded deliberately') + '. '
                                      + _('Reason') + ': %s. ' % archival.reason + _(
                     'Using other methods to determine file openness.'))
+                score_reasons_translated.append('لم يتم تنزيل الملف عن عمد. '
+                                                'السبب: %s. ' % archival.reason +
+                                                'استخدام طرق أخرى لتحديد انفتاح الملف.')
                 return (None, None)
             elif archival.is_broken is None and archival.status_id:
                 # i.e. 'Download failure' or 'System error during archival'
                 score_reasons.append(_('A system error occurred during downloading this file') + '. '
                                      + _('Reason') + ': %s. ' % archival.reason + _(
                     'Using other methods to determine file openness.'))
+                score_reasons_translated.append('حدث خطأ في النظام أثناء تنزيل هذا الملف. '
+                                                'السبب: %s. ' % archival.reason +
+                                                'استخدام طرق أخرى لتحديد انفتاح الملف.')
                 return (None, None)
             else:
                 score_reasons.append(_('This file had not been downloaded at the time of scoring it.'))
+                score_reasons_translated.append('لم يتم تنزيل هذا الملف في وقت تقييمه.')
                 return (None, None)
 
 
-def score_by_url_extension(resource, score_reasons):
+def score_by_url_extension(resource, score_reasons,score_reasons_translated):
     '''
     Looks at the URL for a resource to determine its format and score.
 
@@ -347,6 +378,7 @@ def score_by_url_extension(resource, score_reasons):
     extension_variants_ = extension_variants(resource.url.strip())
     if not extension_variants_:
         score_reasons.append(_('Could not determine a file extension in the URL.'))
+        score_reasons_translated.append('لا يمكن تحديد امتداد الملف في عنوان URL.')
         return (None, None)
     for extension in extension_variants_:
         format_ = format_get(extension)
@@ -355,14 +387,19 @@ def score_by_url_extension(resource, score_reasons):
             if score:
                 score_reasons.append(
                     _('URL extension "%s" relates to format "%s" and receives score: %s.') % (extension, format_, score))
+                score_reasons_translated.append('امتداد URL "%s" يتعلق بالتنسيق "%s" ويحصل على درجة: %s.' % (extension, format_, score))
                 return score, format_
             else:
                 score = 1
                 score_reasons.append(_('URL extension "%s" relates to format "%s"'
                                        ' but a score for that format is not configured, so giving it default score %s.')
                                      % (extension, format_, score))
+                score_reasons_translated.append('امتداد URL "%s" يتعلق بالتنسيق "%s" '
+                                                'لكن لم يتم تكوين درجة لهذا التنسيق، لذا يتم إعطاؤه الدرجة الافتراضية %s.' %
+                                                (extension, format_, score))
                 return score, format_
         score_reasons.append(_('URL extension "%s" is an unknown format.') % extension)
+        score_reasons_translated.append('امتداد URL "%s" هو تنسيق غير معروف.' % extension)
     return (None, None)
 
 
@@ -386,7 +423,7 @@ def extension_variants(url):
     return results
 
 
-def score_by_format_field(resource, score_reasons):
+def score_by_format_field(resource, score_reasons, score_reasons_translated):
     '''
     Looks at the format field of a resource to determine its format and score.
 
@@ -401,15 +438,18 @@ def score_by_format_field(resource, score_reasons):
     format_field = resource.format or ''
     if not format_field:
         score_reasons.append(_('Format field is blank.'))
+        score_reasons_translated.append('حقل التنسيق فارغ.')
         return (None, None)
     format_tuple = ckan_helpers.resource_formats().get(format_field.lower()) or \
         ckan_helpers.resource_formats().get(munge_format_to_be_canonical(format_field))
     if not format_tuple:
         score_reasons.append(_('Format field "%s" does not correspond to a known format.') % format_field)
+        score_reasons_translated.append('حقل التنسيق "%s" لا يتوافق مع تنسيق معروف.' % format_field)
         return (None, None)
     score = resource_format_scores().get(format_tuple[1])
     score_reasons.append(_('Format field "%s" receives score: %s.') %
                          (format_field, score))
+    score_reasons_translated.append('حقل التنسيق "%s" يحصل على درجة: %s.' % (format_field, score))
     return (score, format_tuple[1])
 
 
